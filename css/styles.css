@@ -53,7 +53,6 @@ button:hover { background: #6d4c41; }
 /* --- HOJA A4 MAESTRA --- */
 .sheet {
     width: 210mm;
-    height: 297mm;
     background-color: #Fdfbf7;
     position: relative;
     box-shadow: 0 0 20px rgba(0,0,0,0.5);
@@ -116,6 +115,8 @@ button:hover { background: #6d4c41; }
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: 100%;
+    height: 100%;
 }
 
 .puzzle-label {
@@ -188,7 +189,6 @@ button:hover { background: #6d4c41; }
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 15mm;
-    margin-top: 20mm;
 }
 .sol-grid {
     width: 60mm; height: 60mm;
@@ -250,9 +250,9 @@ button:hover { background: #6d4c41; }
     .sheet {
         width: calc(100% - 24px);
         height: auto;
-        padding: 12px;
         box-shadow: none;
         margin-bottom: 16px;
+        padding: 15mm;
     }
     .main-title { font-size: 28pt; }
     .subtitle { font-size: 12pt; padding: 4mm 6mm; }
@@ -261,22 +261,14 @@ button:hover { background: #6d4c41; }
     .sudoku-grid { width: min(90vw, 340px); height: min(90vw, 340px); margin: 0 auto; }
     .cell { font-size: 16pt; }
     .cell input { font-size: 16pt; }
-    .solutions-grid-layout { grid-template-columns: 1fr; gap: 10mm; }
+    .footer-deco { display: none; }
+    .solutions-grid-layout { width: 100%; height: 100%; }
     .sol-grid { width: 100%; height: auto; }
 }
 
-@media (max-width: 420px) {
-    .main-title { font-size: 20pt; }
-    .level-indicator { font-size: 16pt; }
-    .sudoku-grid { width: min(96vw, 300px); height: min(96vw, 300px); }
-    .cell { font-size: 14pt; }
-    .cell input { font-size: 14pt; padding-top: 2px; }
-    button { padding: 10px; font-size: 14px; }
-    .controls { padding: 8px; }
-}
 
-/* --- DISPOSITIVOS MÓVILES PEQUEÑOS (4.5", 5", 5.5", 6.5") --- */
-@media (max-width: 430px) {
+/* --- DISPOSITIVOS MÓVILES (<720px) --- */
+@media (max-width: 720px) {
     body { padding: 8px; }
     .controls { display: none; }
     .sheet {
@@ -287,60 +279,67 @@ button:hover { background: #6d4c41; }
     }
     .main-title { display: none; }
     .subtitle { display: none; }
-    .level-indicator { display: none; }
+    .level-indicator { 
+        display: block; 
+        font-size: 18pt; 
+        margin-bottom: 12px;
+    }
     .puzzle-label { display: none; }
     .footer-deco { display: none; }
     .guarda-pampa { display: none; }
     .puzzles-container {
-        gap: 12px;
+        gap: 10px;
         width: 100%;
     }
+    /* Grillas de juego: más grandes */
     .sudoku-grid {
-        width: 100%;
-        height: auto;
-        aspect-ratio: 1;
-        max-width: 90vw;
+        width: 95vw;
+        height: 95vw;
+        max-width: 380px;
+        max-height: 380px;
     }
-    .cell { font-size: 12pt; }
-    .cell input { font-size: 12pt; }
+    .cell { font-size: 13pt; }
+    .cell input { font-size: 13pt; }
     .puzzle-unit {
         width: 100%;
     }
-}
-
-/* --- PANTALLAS 5" (375px) --- */
-@media (max-width: 375px) {
-    .sudoku-grid { max-width: 85vw; }
-    .cell { font-size: 11pt; }
-    .cell input { font-size: 11pt; }
-}
-
-/* --- PANTALLAS 4.5" (360px) --- */
-@media (max-width: 360px) {
-    body { padding: 4px; }
-    .sheet { padding: 4px; margin-bottom: 4px; }
-    .puzzles-container { gap: 8px; }
-    .sudoku-grid { max-width: 80vw; }
-    .cell { font-size: 10pt; }
-    .cell input { font-size: 10pt; }
-}
-
-/* --- SOLUCIONES EN MOBILE --- */
-@media (max-width: 430px) {
-    #page-solution .main-title { display: none; }
+    /* Página de soluciones */
+    #page-solution .level-indicator { display: none; }
     #page-solution .subtitle { display: none; }
-    #page-solution .puzzle-label { display: none; }
+    #page-solution .main-title { 
+        display: block; 
+        font-size: 18pt; 
+        margin: 0 0 8px 0;
+    }
     .solutions-grid-layout {
         display: flex;
         flex-direction: column;
-        gap: 8px;
+        gap: 10px;
         margin-top: 8px;
-    }
-    .sol-grid {
         width: 100%;
-        max-width: 90vw;
-        height: auto;
-        aspect-ratio: 1;
     }
-    .sol-grid .cell { font-size: 10pt; }
+    /* Grillas de soluciones: más pequeñas */
+    .sol-grid {
+        width: 90vw;
+        height: 90vw;
+        max-width: 320px;
+        max-height: 320px;
+    }
+    .sol-grid .cell { font-size: 11pt; }
+}
+
+/* --- ESCALA DE TÍTULOS MÓVIL (720px - 480px) --- */
+@media (max-width: 600px) {
+    .level-indicator { font-size: 16pt; }
+    #page-solution .main-title { font-size: 16pt; }
+}
+
+@media (max-width: 480px) {
+    .level-indicator { font-size: 14pt; }
+    #page-solution .main-title { font-size: 14pt; }
+}
+
+@media (max-width: 380px) {
+    .level-indicator { font-size: 12pt; }
+    #page-solution .main-title { font-size: 12pt; }
 }
