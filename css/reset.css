@@ -1,0 +1,69 @@
+/* --- CSS RESET --- */
+/* Elimina estilos por defecto del navegador para empezar de cero */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+img, picture, video, canvas, svg {
+    display: block;
+    max-width: 100%;
+}
+
+input, button, textarea, select {
+    font: inherit;
+}
+
+p, h1, h2, h3, h4, h5, h6 {
+    overflow-wrap: break-word;
+}
+
+#root, #__next {
+    isolation: isolate;
+}
+
+/* Resetea las tablas */
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+/* Elimina bullets de listas */
+ul, ol {
+    list-style: none;
+}
+
+/* Resetea links */
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+/* Campo de formulario limpio */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type=number] {
+    -moz-appearance: textfield;
+}
+
+/* Focus visible para accesibilidad */
+*:focus-visible {
+    outline: 2px solid rgba(44, 27, 16, 0.3);
+    outline-offset: 2px;
+}

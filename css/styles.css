@@ -1,0 +1,346 @@
+/* --- ESTILOS DE SISTEMA (No Imprimibles) --- */
+body {
+    margin: 0;
+    padding: 20px;
+    background-color: #2b2b2b;
+    font-family: 'Lato', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.controls {
+    background: #3E2723;
+    padding: 15px 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+    margin-bottom: 20px;
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    border: 1px solid #8D6E63;
+    color: #Fdfbf7;
+}
+
+select {
+    padding: 10px;
+    border-radius: 4px;
+    border: none;
+    background: #Fdfbf7;
+    font-family: 'Playfair Display', serif;
+    font-weight: bold;
+    color: #3E2723;
+    font-size: 16px;
+}
+
+button {
+    padding: 10px 20px;
+    border-radius: 4px;
+    border: none;
+    background: #8D6E63;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.2s;
+    font-family: 'Lato', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+button:hover { background: #6d4c41; }
+
+/* --- HOJA A4 MAESTRA --- */
+.sheet {
+    width: 210mm;
+    height: 297mm;
+    background-color: #Fdfbf7;
+    position: relative;
+    box-shadow: 0 0 20px rgba(0,0,0,0.5);
+    overflow: hidden;
+    page-break-after: always;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* Textura de papel */
+    background-image: 
+        repeating-linear-gradient(0deg, transparent, transparent 1px, rgba(62, 39, 35, 0.03) 2px, rgba(62, 39, 35, 0.03) 4px),
+        url('https://www.transparenttextures.com/patterns/natural-paper.png');
+    background-blend-mode: multiply;
+    padding: 15mm;
+}
+
+/* --- ELEMENTOS DE DISEÑO (Estilo Campo) --- */
+.main-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 48pt;
+    font-weight: 900;
+    color: #2C1B10;
+    margin: 0;
+    line-height: 1;
+    text-align: center;
+}
+
+.subtitle {
+    font-family: 'Playfair Display', serif;
+    font-size: 14pt;
+    font-style: italic;
+    color: #5d4037;
+    border-top: 1px solid #5d4037;
+    border-bottom: 1px solid #5d4037;
+    padding: 2mm 10mm;
+    margin-top: 5mm;
+    margin-bottom: 10mm;
+    display: inline-block;
+}
+
+.level-indicator {
+    font-family: 'Playfair Display', serif;
+    font-size: 24pt;
+    font-weight: 700;
+    color: #3E2723;
+    margin-bottom: 10mm;
+    text-transform: capitalize;
+}
+
+/* Contenedor de Puzzles */
+.puzzles-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20mm;
+    align-items: center;
+    width: 100%;
+}
+
+.puzzle-unit {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.puzzle-label {
+    font-family: 'Playfair Display', serif;
+    font-size: 12pt;
+    font-weight: 700;
+    color: #4E342E;
+    margin-bottom: 2mm;
+}
+
+/* La Grilla */
+.sudoku-grid {
+    display: grid;
+    grid-template-columns: repeat(9, 1fr);
+    width: 90mm;
+    height: 90mm;
+    border: 2pt solid #2C1B10;
+    background: #fffbf0;
+}
+
+.cell {
+    border-right: 0.5pt solid #8D6E63;
+    border-bottom: 0.5pt solid #8D6E63;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 18pt;
+    color: #2C1B10;
+}
+
+.cell:nth-child(3n) { border-right: 2pt solid #2C1B10; }
+.cell:nth-child(9n) { border-right: none; }
+.cell:nth-child(n+19):nth-child(-n+27),
+.cell:nth-child(n+46):nth-child(-n+54) { border-bottom: 2pt solid #2C1B10; }
+.cell:nth-child(n+73) { border-bottom: none; }
+
+.clue { font-weight: 900; } /* Pistas más oscuras */
+
+/* Decoración Pie de Página */
+.footer-deco {
+    position: absolute;
+    bottom: 15mm;
+    width: 100%;
+    height: 30mm;
+    pointer-events: none;
+}
+.svg-icon {
+    position: absolute;
+    mix-blend-mode: multiply;
+    opacity: 0.9;
+}
+
+.guarda-pampa {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 10mm;
+    border-top: 1.5pt solid #5d4037;
+    opacity: 0.7;
+    background-image: url("data:image/svg+xml,%3Csvg width='40' height='20' viewBox='0 0 40 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 20 L10 10 L20 20 L30 10 L40 20' fill='none' stroke='%238D6E63' stroke-width='1.5'/%3E%3Cpath d='M10 10 L20 0 L30 10' fill='none' stroke='%238D6E63' stroke-width='1.5'/%3E%3Crect x='19' y='9' width='2' height='2' fill='%235d4037'/%3E%3C/svg%3E");
+    background-size: 15mm 8mm;
+    background-repeat: repeat-x;
+    background-position: bottom;
+}
+
+/* --- PÁGINA DE SOLUCIONES (Estilo compacto) --- */
+.solutions-grid-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15mm;
+    margin-top: 20mm;
+}
+.sol-grid {
+    width: 60mm; height: 60mm;
+    font-size: 10pt;
+    border-width: 1pt;
+}
+.sol-grid .cell { font-size: 12pt; border-width: 0.5pt; }
+.sol-grid .cell:nth-child(3n) { border-right-width: 1pt; }
+.sol-grid .cell:nth-child(n+19):nth-child(-n+27),
+.sol-grid .cell:nth-child(n+46):nth-child(-n+54) { border-bottom-width: 1pt; }
+
+@media print {
+    body { background: none; padding: 0; display: block; }
+    .controls { display: none; }
+    .sheet { margin: 0; box-shadow: none; width: 100%; height: 100%; page-break-after: always; }
+}
+
+/* Inputs estilo 'papel' dentro de celdas */
+.cell input {
+    width: 100%;
+    height: 100%;
+    border: none;
+    outline: none;
+    background: transparent;
+    text-align: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 18pt;
+    color: #2C1B10;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    caret-color: #2C1B10;
+    line-height: 1;
+    padding: 0;
+}
+
+.cell input::placeholder { color: rgba(44,27,16,0.15); }
+
+/* Fondo de éxito suave cuando se completa correctamente */
+.sudoku-grid.win {
+    transition: background 600ms ease;
+    background: linear-gradient(180deg, #e8f8ee 0%, #d7f2df 100%);
+    box-shadow: 0 0 30px rgba(46, 125, 50, 0.15) inset;
+}
+
+/* --- MOBILE / RESPONSIVE --- */
+@media (max-width: 900px) {
+    body { padding: 12px; }
+    .controls {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+        padding: 10px;
+        width: calc(100% - 24px);
+        box-sizing: border-box;
+    }
+    .controls label { color: #Fdfbf7; }
+    .controls select, .controls button { width: 100%; }
+    .sheet {
+        width: calc(100% - 24px);
+        height: auto;
+        padding: 12px;
+        box-shadow: none;
+        margin-bottom: 16px;
+    }
+    .main-title { font-size: 28pt; }
+    .subtitle { font-size: 12pt; padding: 4mm 6mm; }
+    .level-indicator { font-size: 18pt; margin-bottom: 8mm; }
+    .puzzles-container { gap: 12mm; }
+    .sudoku-grid { width: min(90vw, 340px); height: min(90vw, 340px); margin: 0 auto; }
+    .cell { font-size: 16pt; }
+    .cell input { font-size: 16pt; }
+    .solutions-grid-layout { grid-template-columns: 1fr; gap: 10mm; }
+    .sol-grid { width: 100%; height: auto; }
+}
+
+@media (max-width: 420px) {
+    .main-title { font-size: 20pt; }
+    .level-indicator { font-size: 16pt; }
+    .sudoku-grid { width: min(96vw, 300px); height: min(96vw, 300px); }
+    .cell { font-size: 14pt; }
+    .cell input { font-size: 14pt; padding-top: 2px; }
+    button { padding: 10px; font-size: 14px; }
+    .controls { padding: 8px; }
+}
+
+/* --- DISPOSITIVOS MÓVILES PEQUEÑOS (4.5", 5", 5.5", 6.5") --- */
+@media (max-width: 430px) {
+    body { padding: 8px; }
+    .controls { display: none; }
+    .sheet {
+        width: 100%;
+        padding: 8px;
+        margin-bottom: 8px;
+        min-height: auto;
+    }
+    .main-title { display: none; }
+    .subtitle { display: none; }
+    .level-indicator { display: none; }
+    .puzzle-label { display: none; }
+    .footer-deco { display: none; }
+    .guarda-pampa { display: none; }
+    .puzzles-container {
+        gap: 12px;
+        width: 100%;
+    }
+    .sudoku-grid {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 1;
+        max-width: 90vw;
+    }
+    .cell { font-size: 12pt; }
+    .cell input { font-size: 12pt; }
+    .puzzle-unit {
+        width: 100%;
+    }
+}
+
+/* --- PANTALLAS 5" (375px) --- */
+@media (max-width: 375px) {
+    .sudoku-grid { max-width: 85vw; }
+    .cell { font-size: 11pt; }
+    .cell input { font-size: 11pt; }
+}
+
+/* --- PANTALLAS 4.5" (360px) --- */
+@media (max-width: 360px) {
+    body { padding: 4px; }
+    .sheet { padding: 4px; margin-bottom: 4px; }
+    .puzzles-container { gap: 8px; }
+    .sudoku-grid { max-width: 80vw; }
+    .cell { font-size: 10pt; }
+    .cell input { font-size: 10pt; }
+}
+
+/* --- SOLUCIONES EN MOBILE --- */
+@media (max-width: 430px) {
+    #page-solution .main-title { display: none; }
+    #page-solution .subtitle { display: none; }
+    #page-solution .puzzle-label { display: none; }
+    .solutions-grid-layout {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        margin-top: 8px;
+    }
+    .sol-grid {
+        width: 100%;
+        max-width: 90vw;
+        height: auto;
+        aspect-ratio: 1;
+    }
+    .sol-grid .cell { font-size: 10pt; }
+}
