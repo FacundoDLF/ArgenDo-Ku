@@ -107,10 +107,24 @@ function checkWin(gameIndex, elementId) {
     const container = document.getElementById(elementId);
     if (!container) return false;
 
+    // Limpiar alertas previas
+    container.classList.remove('win', 'error');
+    const existingOverlay = container.querySelector('.grid-overlay');
+    if (existingOverlay) existingOverlay.remove();
+
+    const wrapper = container.closest('.puzzle-wrapper');
+    if (wrapper) {
+        const existingErrorLabel = wrapper.querySelector('.label-error-msg');
+        if (existingErrorLabel) existingErrorLabel.remove();
+    }
+
     let allFilled = true;
+    let allCorrect = true;
 
     for (let idx = 0; idx < container.children.length; idx++) {
         const cell = container.children[idx];
+        if (cell.classList.contains('grid-overlay')) continue; // Ignorar el div del overlay
+
         const r = parseInt(cell.dataset.row, 10);
         const c = parseInt(cell.dataset.col, 10);
         let val = null;
@@ -118,19 +132,43 @@ function checkWin(gameIndex, elementId) {
         const input = cell.querySelector('input');
         if (input) {
             const v = input.value.trim();
-            if (v === '') { allFilled = false; break; }
-            val = parseInt(v, 10);
+            if (v === '') {
+                allFilled = false;
+            } else {
+                val = parseInt(v, 10);
+            }
         } else {
             val = parseInt(cell.textContent, 10);
         }
 
-        if (val !== sol[r][c]) return false;
+        if (val !== null && val !== sol[r][c]) {
+            allCorrect = false;
+        }
     }
 
+    // Solo evaluar si el usuario llenó todas las casillas
     if (allFilled) {
-        container.classList.add('win');
-        return true;
+        if (allCorrect) {
+            container.classList.add('win');
+            const overlay = document.createElement('div');
+            overlay.className = 'grid-overlay grid-overlay--success';
+            overlay.textContent = "Correcto!";
+            container.appendChild(overlay);
+        } else {
+            container.classList.add('error');
+            if (wrapper) {
+                const labelContainer = wrapper.querySelector('.puzzle-label');
+                if (labelContainer) {
+                    const errSpan = document.createElement('div');
+                    errSpan.className = 'label-error-msg';
+                    errSpan.textContent = "❌ Contiene errores";
+                    labelContainer.insertBefore(errSpan, labelContainer.firstChild);
+                }
+            }
+        }
+        return allCorrect;
     }
+
     return false;
 }
 

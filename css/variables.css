@@ -50,6 +50,7 @@
     --font-size-label: 9pt;
     --font-size-clue: 12pt;
     --font-size-input: 12pt;
+    --size-overlay-success: clamp(1rem, 2.5vw, 2.2rem);
 
     /* ──────────────────────────────────────────────────────────
        3. DIMENSIONES Y FORMATOS (SHEETS)
