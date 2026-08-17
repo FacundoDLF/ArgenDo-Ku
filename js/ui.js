@@ -82,6 +82,7 @@ function renderGrid(elementId, gridData, isSolution, puzzleData = null, gameInde
                     const gridEl = document.getElementById(elementId);
                     gridEl.classList.remove('win');
                     checkWin(gameIndex, elementId);
+                    saveState();
                 });
 
                 cell.appendChild(inp);
@@ -223,6 +224,7 @@ function renderPage(pageIndex, mode = viewMode) {
     }
 
     renderPagination();
+    saveState();
 }
 
 function renderPagination() {
@@ -321,8 +323,69 @@ function setButtonLoading(btn, loading) {
 }
 
 /* ──────────────────────────────────────────────
-   INICIALIZACIÓN
+   PERSISTENCIA DE ESTADO
+   ────────────────────────────────────────────── */
+
+function saveState() {
+    if (gamesState.length > 0) {
+        localStorage.setItem('argendoku_state', JSON.stringify({
+            gamesState,
+            viewMode,
+            currentPage
+        }));
+    }
+}
+
+function restoreGame() {
+    const saved = localStorage.getItem('argendoku_state');
+    if (saved) {
+        try {
+            const data = JSON.parse(saved);
+            gamesState = data.gamesState || [];
+            viewMode = data.viewMode || 'puzzles';
+            currentPage = data.currentPage || 1;
+        } catch (e) {
+            console.error("Error al recuperar estado:", e);
+        }
+    }
+    document.getElementById('recovery-modal').classList.add('hidden');
+
+    if (gamesState.length > 0) {
+        renderPage(currentPage, viewMode);
+    } else {
+        generateBook();
+    }
+}
+
+function startNewGame() {
+    localStorage.removeItem('argendoku_state');
+    gamesState = [];
+    currentPage = 1;
+    viewMode = 'puzzles';
+    document.getElementById('recovery-modal').classList.add('hidden');
+    generateBook();
+}
+
+
+/* ──────────────────────────────────────────────
+   INICIALIZACIÓN Y EVENTOS GLOBALES
    ────────────────────────────────────────────── */
 window.addEventListener('DOMContentLoaded', () => {
-    generateBook(); // Generar la primera página
+    const savedState = localStorage.getItem('argendoku_state');
+    if (savedState) {
+        document.getElementById('recovery-modal').classList.remove('hidden');
+    } else {
+        generateBook(); // Generar la primera página
+    }
+});
+
+// Prevenir pérdida de progreso accidental al refrescar o cerrar la pestaña
+window.addEventListener('beforeunload', (e) => {
+    // Solo advertimos si el usuario tiene algún juego activo
+    if (gamesState.length > 0) {
+        // La mayoría de los navegadores modernos ignoran el mensaje custom, 
+        // pero requieren e.returnValue = '' para mostrar su propio modal de confirmación
+        e.preventDefault();
+        e.returnValue = '';
+    }
 });

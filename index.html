@@ -114,6 +114,22 @@
         </symbol>
     </svg>
 
+    <!-- ═══════════════════════════════════════════
+         MODAL DE RECUPERACIÓN
+    ═══════════════════════════════════════════ -->
+    <div id="recovery-modal" class="modal-overlay hidden" aria-hidden="true" role="dialog" aria-labelledby="modal-title"
+        aria-modal="true">
+        <div class="modal-content">
+            <h2 id="modal-title" class="modal-title">Partida en curso</h2>
+            <p class="modal-message">Hemos guardado tu progreso anterior. ¿Deseas retomar la partida donde la dejaste o
+                empezar un juego nuevo?</p>
+            <div class="modal-actions">
+                <button class="btn btn--secondary" id="btn-modal-new" onclick="startNewGame()">Empezar Nuevo</button>
+                <button class="btn btn--primary" id="btn-modal-restore" onclick="restoreGame()">Retomar Partida</button>
+            </div>
+        </div>
+    </div>
+
     <!-- SCRIPTS -->
     <script src="js/sudoku-engine.js"></script>
     <script src="js/ui.js"></script>
