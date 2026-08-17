@@ -1,0 +1,108 @@
+/* ═══════════════════════════════════════════════════════════
+   DESIGN TOKENS — Single Source of Truth
+   ═══════════════════════════════════════════════════════════ */
+:root {
+    /* ──────────────────────────────────────────────────────────
+       1. COLORES Y TEMAS
+       ────────────────────────────────────────────────────────── */
+    /* UI General */
+    --color-bg: #24211e;
+    --color-panel: #3b2a22;
+    --color-panel-alt: #2f2018;
+    --color-panel-border: rgba(245, 241, 231, 0.08);
+    --color-text: #f5f1e7;
+    --color-label-bg: #b8b8b8;
+    --color-muted: rgba(245, 241, 231, 0.55);
+    --color-muted-dim: rgba(245, 241, 231, 0.3);
+    --color-accent: #c2410c;
+    --color-accent-hv: #9a3412;
+    --color-accent-glow: rgba(194, 65, 12, 0.25);
+
+    /* Área de Juegos (Lienzo, Hojas y Tinta) */
+    --color-paper: #f5f1e7;
+    --color-paper-alt: #fffbf2;
+    --color-ink: #1c1917;
+    --color-ink-muted: #4e342e;
+    --color-sol-given: #1c1917;
+    /* Mismo que ink */
+    --color-sol-missing: #c2410c;
+    /* Mismo que accent */
+    --color-grid-inner: #8D6E63;
+    /* Color de las celdas internas */
+    --color-input-text: #5d4037;
+    --color-input-placeholder: rgba(44, 27, 16, 0.15);
+    --color-win-bg-start: #e8f8ee;
+    --color-win-bg-end: #d7f2df;
+    --color-win-shadow: rgba(46, 125, 50, 0.15);
+    --color-guarda-border: #5d4037;
+
+    /* ──────────────────────────────────────────────────────────
+       2. TIPOGRAFÍA Y FUENTES
+       ────────────────────────────────────────────────────────── */
+    --font-ui: 'Inter', 'Lato', sans-serif;
+    --font-serif: 'Playfair Display', serif;
+    --font-math: 'Math';
+
+    /* Tamaños de Fuente (Escala para Impresión/Canvas) */
+    --font-size-title: 32pt;
+    --font-size-sol-title: 16pt;
+    --font-size-subtitle: 10pt;
+    --font-size-label: 9pt;
+    --font-size-clue: 12pt;
+    --font-size-input: 12pt;
+
+    /* ──────────────────────────────────────────────────────────
+       3. DIMENSIONES Y FORMATOS (SHEETS)
+       ────────────────────────────────────────────────────────── */
+    --sheet-aspect-ratio: 1.414;
+    /* Proporción A4 */
+    --sheet-padding-y: 2%;
+    --sheet-padding-x: 4%;
+    --sheet-border-radius: 2px;
+
+    --sheet-subtitle-mt: 1.5%;
+    --sheet-subtitle-mb: 2.5%;
+    --sheet-puzzles-gap: 2%;
+    --sheet-solutions-gap: 4%;
+    --sheet-solutions-mt: 2%;
+
+    /* ──────────────────────────────────────────────────────────
+       4. DIMENSIONES Y FORMATOS (GRILLAS)
+       ────────────────────────────────────────────────────────── */
+    --grid-max-width: 90%;
+    --grid-border: 2pt;
+    /* Borde exterior y bloques de 3x3 */
+    --grid-cell-border: 0.5pt;
+    /* Borde interior de celdas */
+    --grid-sol-border: 2pt;
+    --grid-sol-inner: 1pt;
+
+    /* ──────────────────────────────────────────────────────────
+       5. ESPACIADOS (SPACING)
+       ────────────────────────────────────────────────────────── */
+    --space-xs: 4px;
+    --space-sm: 8px;
+    --space-md: 16px;
+    --space-lg: 24px;
+    --space-xl: 40px;
+
+    /* ──────────────────────────────────────────────────────────
+       6. APARIENCIA (RADII, SHADOWS, TRANSITIONS)
+       ────────────────────────────────────────────────────────── */
+    /* Radii */
+    --radius-sm: 6px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+    --radius-pill: 999px;
+
+    /* Shadows */
+    --shadow-panel: 0 4px 24px rgba(0, 0, 0, 0.45);
+    --shadow-paper: 0 10px 40px rgba(0, 0, 0, 0.55), 0 2px 8px rgba(0, 0, 0, 0.35);
+
+    /* Transitions */
+    --transition-fast: 150ms ease;
+    --transition-base: 250ms ease;
+
+    /* Layout general */
+    --header-h: 72px;
+}

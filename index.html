@@ -1,99 +1,123 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ar-gen-do-ku: Generador Infinito</title>
+    <title>ArgenDo-Ku</title>
+    <meta name="description"
+        content="Generador infinito de puzzles Sudoku. Jugá en el navegador o exportá como PDF para imprimir.">
     <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Lato:wght@300;400;700&family=Inter:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/variables.css">
     <link rel="stylesheet" href="css/styles.css">
 </head>
+
 <body>
 
-    <div class="controls">
-        <label>Nivel de Dificultad:</label>
-        <select id="difficultySelect">
-            <option value="35">Nivel Inicial (Fácil)</option>
-            <option value="45">Nivel Intermedio</option>
-            <option value="52">Nivel Avanzado (Difícil)</option>
-        </select>
-        <button onclick="generateBook()">Generar Nueva Hoja</button>
-        <button onclick="window.print()" style="background: #5d4037;">Imprimir PDF</button>
-    </div>
+    <!-- ═══════════════════════════════════════════
+         HEADER STICKY
+    ═══════════════════════════════════════════ -->
+    <header class="app-header" role="banner">
+        <div class="header-inner">
 
-    <!-- PÁGINA 1: JUEGO -->
-    <div class="sheet" id="page-puzzle">
-        <div class="main-title">Ar-gen-do-ku</div>
-        <div class="subtitle">– El sudoku tradicional –</div>
-        
-        <div class="level-indicator" id="displayLevel">Nivel Inicial</div>
+            <!-- Logo (izquierda) -->
+            <div class="app-logo" aria-label="ArgenDo-Ku">
+                <svg class="logo-icon" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg"
+                    aria-hidden="true">
+                    <rect x="1" y="1" width="34" height="34" rx="6" stroke="#c2410c" stroke-width="2" />
+                    <rect x="5" y="5" width="10" height="10" rx="1" fill="#c2410c" opacity="0.85" />
+                    <rect x="17" y="5" width="4" height="4" rx="0.5" fill="#f5f1e7" opacity="0.4" />
+                    <rect x="23" y="5" width="8" height="8" rx="1" fill="#c2410c" opacity="0.5" />
+                    <rect x="5" y="17" width="4" height="4" rx="0.5" fill="#f5f1e7" opacity="0.4" />
+                    <rect x="11" y="17" width="4" height="4" rx="0.5" fill="#c2410c" opacity="0.7" />
+                    <rect x="17" y="17" width="4" height="4" rx="0.5" fill="#f5f1e7" opacity="0.3" />
+                    <rect x="5" y="23" width="8" height="8" rx="1" fill="#c2410c" opacity="0.6" />
+                    <rect x="23" y="23" width="4" height="4" rx="0.5" fill="#f5f1e7" opacity="0.4" />
+                    <rect x="29" y="17" width="4" height="4" rx="0.5" fill="#c2410c" opacity="0.7" />
+                </svg>
+                <span class="logo-text">Argen<em>Do</em>-Ku</span>
+            </div>
 
-        <div class="puzzles-container">
-            <div class="puzzle-unit">
-                <div class="puzzle-label" id="label-A">Inicial 01A</div>
-                <div id="grid-A" class="sudoku-grid"></div>
+            <!-- Controles (centro) -->
+            <div class="header-controls" role="toolbar" aria-label="Controles de generación">
+                <div class="field-group">
+                    <label class="field-label" for="difficultySelect">Dificultad</label>
+                    <select id="difficultySelect" class="field-select">
+                        <option value="35">Novato</option>
+                        <option value="45">Normal</option>
+                        <option value="52">Avanzado</option>
+                        <option value="58">Experto</option>
+                    </select>
+                </div>
+                <button class="btn btn--primary" id="btn-generate" onclick="generateBook()">
+                    <svg class="btn-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M12 5v14M5 12h14" />
+                    </svg>
+                    <span class="btn-label">Agregar juego</span>
+                </button>
             </div>
-            <div class="puzzle-unit">
-                <div class="puzzle-label" id="label-B">Inicial 01B</div>
-                <div id="grid-B" class="sudoku-grid"></div>
-            </div>
+
+            <!-- Tagline (derecha) -->
+            <p class="header-tagline" aria-hidden="true">El tradicional juego de SuDoKu</p>
+
+        </div>
+    </header>
+
+
+
+    <!-- ═══════════════════════════════════════════
+         WORKSPACE — Lienzo de papel
+    ═══════════════════════════════════════════ -->
+    <main class="workspace" aria-label="Vista previa de puzzles">
+        <div class="workspace-grid" id="workspace-grid">
+            <!-- La hoja activa se renderiza aquí dinámicamente vía JS -->
         </div>
 
-        <!-- Decoración -->
-        <div class="footer-deco">
-            <svg class="svg-icon" style="left: 15mm; bottom: 5mm; width: 35mm; height: 40mm;"><use href="#molino"></use></svg>
-            <svg class="svg-icon" style="right: 15mm; bottom: 5mm; width: 25mm; height: 25mm;"><use href="#mate"></use></svg>
-        </div>
-        <div class="guarda-pampa"></div>
-    </div>
-
-    <!-- PÁGINA 2: SOLUCIONES -->
-    <div class="sheet" id="page-solution">
-        <div class="main-title" style="font-size: 32pt; margin-top: 10mm;">Soluciones</div>
-        <div class="subtitle" style="margin-bottom: 5mm;">Verificar resultados</div>
-
-        <div class="solutions-grid-layout">
-            <div class="puzzle-unit">
-                <div class="puzzle-label" id="sol-label-A">Solución 01A</div>
-                <div id="sol-grid-A" class="sudoku-grid sol-grid"></div>
+        <!-- ═══════════════════════════════════════════
+             PAGINACIÓN
+        ═══════════════════════════════════════════ -->
+        <nav class="pagination-container" aria-label="Navegación de páginas">
+            <div class="pagination-pills" id="pagination-pills">
+                <!-- Botones de página se generan aquí dinámicamente vía JS -->
             </div>
-            <div class="puzzle-unit">
-                <div class="puzzle-label" id="sol-label-B">Solución 01B</div>
-                <div id="sol-grid-B" class="sudoku-grid sol-grid"></div>
-            </div>
-        </div>
+        </nav>
+    </main>
 
-        <div class="guarda-pampa"></div>
-    </div>
+
 
     <!-- SVG ASSETS -->
-    <svg style="display: none;">
+    <svg style="display: none;" aria-hidden="true">
         <symbol id="molino" viewBox="0 0 100 120">
             <g stroke="#3E2723" fill="none" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M40 100 L50 20 L60 100" />
-                <path d="M42 80 L58 80 M44 60 L56 60 M46 40 L54 40" stroke-width="0.8"/>
-                <circle cx="50" cy="20" r="3" fill="#3E2723"/>
-                <path d="M50 20 L50 5 M50 20 L65 15 M50 20 L60 30 M50 20 L40 30 M50 20 L35 15" stroke-width="1"/>
-                <path d="M20 100 Q 35 95 50 98 Q 65 95 80 100" stroke-width="0.8"/>
+                <path d="M42 80 L58 80 M44 60 L56 60 M46 40 L54 40" stroke-width="0.8" />
+                <circle cx="50" cy="20" r="3" fill="#3E2723" />
+                <path d="M50 20 L50 5 M50 20 L65 15 M50 20 L60 30 M50 20 L40 30 M50 20 L35 15" stroke-width="1" />
+                <path d="M20 100 Q 35 95 50 98 Q 65 95 80 100" stroke-width="0.8" />
             </g>
         </symbol>
         <symbol id="mate" viewBox="0 0 100 100">
-             <g stroke="#3E2723" fill="none" stroke-width="1.2" stroke-linecap="round">
+            <g stroke="#3E2723" fill="none" stroke-width="1.2" stroke-linecap="round">
                 <path d="M30 45 Q 20 65 30 80 Q 50 90 70 80 Q 80 65 70 45" />
                 <ellipse cx="50" cy="45" rx="20" ry="6" />
-                <line x1="55" y1="45" x2="75" y2="10" stroke-width="3.5" stroke="#3E2723"/>
-                <line x1="55" y1="45" x2="75" y2="10" stroke-width="1.5" stroke="#Fdfbf7"/>
+                <line x1="55" y1="45" x2="75" y2="10" stroke-width="3.5" stroke="#3E2723" />
+                <line x1="55" y1="45" x2="75" y2="10" stroke-width="1.5" stroke="#Fdfbf7" />
                 <path d="M40 85 Q 50 90 60 85" />
-             </g>
+            </g>
         </symbol>
     </svg>
 
-    <!-- SCRIPTS MODULARES -->
+    <!-- SCRIPTS -->
     <script src="js/sudoku-engine.js"></script>
     <script src="js/ui.js"></script>
 
 </body>
+
 </html>
