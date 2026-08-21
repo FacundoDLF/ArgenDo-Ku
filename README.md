@@ -1,5 +1,7 @@
 # 🎯 ArgenDo-Ku: Generador Infinito
 
+Game: https://facundodlf.github.io/ArgenDo-Ku/
+
 Un generador de sudokus interactivo con diseño elegante estilo campo argentino. Crea puzzles de Sudoku en tres niveles de dificultad, juega directamente en el navegador o imprime en PDF.
 
 ## ✨ Características
